@@ -1,0 +1,19 @@
+terraform {
+    required_providers {
+      aci = {
+        source = "CiscoDevNet/aci"
+      }
+    }
+    
+}
+
+provider "aci" {
+    username = "admin"
+    password = "!v3G@!4@Y"
+    url = "https://sandboxapicdc.cisco.com"
+}
+
+resource "aci_tenant" "tenant" {
+    name = "SupunS"
+    description = "Created from Terraform"
+}
