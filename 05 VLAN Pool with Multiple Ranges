@@ -1,0 +1,37 @@
+terraform {
+    required_providers {
+      aci = {
+        source = "CiscoDevNet/aci"
+      }
+    }
+    
+}
+
+provider "aci" {
+    username = "admin"
+    password = "!v3G@!4@Y"
+    url = "https://sandboxapicdc.cisco.com"
+}
+
+resource "aci_vlan_pool" "vlan_pool" {
+  name       = "VLAN-POOL"
+  alloc_mode = "static"
+}
+
+resource "aci_ranges" "pool_range_1" {
+  vlan_pool_dn = aci_vlan_pool.vlan_pool.id
+  from         = "vlan-1"
+  to           = "vlan-10"
+  alloc_mode   = "inherit"
+  role         = "external"
+  description  = "Terraform"
+}
+
+resource "aci_ranges" "pool_range_2" {
+  vlan_pool_dn = aci_vlan_pool.vlan_pool.id
+  from         = "vlan-100"
+  to           = "vlan-150"
+  alloc_mode   = "inherit"
+  role         = "external"
+  description  = "Terraform"
+}
