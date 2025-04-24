@@ -1,0 +1,27 @@
+terraform {
+    required_providers {
+      aci = {
+        source = "CiscoDevNet/aci"
+      }
+    }
+    
+}
+
+provider "aci" {
+    username = "admin"
+    password = "!v3G@!4@Y"
+    url = "https://sandboxapicdc.cisco.com"
+}
+
+data "aci_tenant" "common" {
+  name = "common"
+}
+
+resource "aci_vrf" "vrf1" {
+  tenant_dn          = data.aci_tenant.common.id
+  bd_enforced_enable = "no"
+  knw_mcast_act      = "permit"
+  name               = "vrf1"
+  pc_enf_dir         = "ingress"
+  pc_enf_pref        = "enforced"
+}
