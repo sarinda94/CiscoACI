@@ -1,0 +1,29 @@
+terraform {
+    required_providers {
+      aci = {
+        source = "CiscoDevNet/aci"
+      }
+    }
+    
+}
+
+provider "aci" {
+    username = "admin"
+    password = "!v3G@!4@Y"
+    url = "https://sandboxapicdc.cisco.com"
+}
+
+data "aci_vlan_pool" "Prod_VLAN" {
+  name = "Prod_VLAN"
+  alloc_mode  = "static"
+}
+
+resource "aci_physical_domain" "PHYDOM" {
+  name        = "PHYDOM"
+  annotation  = "tag_domain"
+  name_alias  = "alias_domain"
+  relation_infra_rs_vlan_ns = data.aci_vlan_pool.Prod_VLAN.id
+  lifecycle {
+    prevent_destroy = true
+  }
+}
