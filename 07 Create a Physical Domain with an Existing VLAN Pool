@@ -23,7 +23,4 @@ resource "aci_physical_domain" "PHYDOM" {
   annotation  = "tag_domain"
   name_alias  = "alias_domain"
   relation_infra_rs_vlan_ns = data.aci_vlan_pool.Prod_VLAN.id
-  lifecycle {
-    prevent_destroy = true
-  }
 }
